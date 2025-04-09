@@ -63,14 +63,14 @@ public class PillarProcessor extends StructureProcessor {
             BlockPos.MutableBlockPos mutable = blockInfoGlobal.pos().mutable().move(Direction.DOWN);
             BlockState currBlockState = levelReader.getBlockState(mutable);
 
-            while (mutable.getY() > levelReader.getMinBuildHeight()
-                    && mutable.getY() < levelReader.getMaxBuildHeight()
+            while (mutable.getY() > levelReader.getMinY()
+                    && mutable.getY() < levelReader.getMaxY()
                     && (currBlockState.isAir() || !levelReader.getFluidState(mutable).isEmpty())) {
                 StructureContext ctx = new StructureContext.Builder()
                         .pieceMinY(mutable.getY())
                         .pieceMaxY(mutable.getY())
                         .build();
-                levelReader.getChunk(mutable).setBlockState(mutable, this.pillarStates.get(random, ctx), false);
+                levelReader.getChunk(mutable).setBlockState(mutable, this.pillarStates.get(random, ctx), 1);
 
                 // Update to next position
                 mutable.move(Direction.DOWN);
